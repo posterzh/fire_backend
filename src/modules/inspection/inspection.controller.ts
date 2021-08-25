@@ -15,7 +15,6 @@ export class InspectionController {
 	@Get()
 	@ApiOperation({ summary: 'Get all inspection' })
 
-	// Swagger Parameter [optional]
 	@ApiQuery({
 		name: 'category',
 		required: false,

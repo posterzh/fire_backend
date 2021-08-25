@@ -7,7 +7,7 @@ import {
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
 import * as mongoose from "mongoose";
-import { IReport } from "./interfaces/report.interface";
+import { IQuestion, IReport, ISection } from "./interfaces/report.interface";
 import { OptQuery } from "src/utils/OptQuery";
 import { StrToUnix } from "src/utils/StringManipulation";
 
@@ -18,6 +18,8 @@ export class ReportService {
 
   constructor(
     @InjectModel("Report") private readonly reportModel: Model<IReport>,
+    @InjectModel("Section") private readonly sectionModel: Model<ISection>,
+    @InjectModel("Question") private readonly questionModel: Model<IQuestion>,
   ) {
   }
 

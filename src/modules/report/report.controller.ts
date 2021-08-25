@@ -6,6 +6,7 @@ import { JwtGuard } from "../auth/guards/jwt.guard";
 
 import { ReportService } from "./report.service";
 import { ArrayIdDTO, CreateReportDTO, UpdateReportDTO } from "./dto/report.dto";
+import { InspectionCategory } from "../inspection/dto/inspection.dto";
 
 @ApiTags("Reports")
 @Controller('reports')
@@ -15,53 +16,11 @@ export class ReportController {
 	@Get()
 	@ApiOperation({ summary: 'Get all report' })
 
-	// Swagger Parameter [optional]
 	@ApiQuery({
-		name: 'sortval',
+		name: 'inspection',
 		required: false,
-		explode: true,
 		type: String,
-		isArray: false
-	})
-
-	@ApiQuery({
-		name: 'sortby',
-		required: false,
-		explode: true,
-		type: String,
-		isArray: false
-	})
-
-	@ApiQuery({
-		name: 'value',
-		required: false,
-		explode: true,
-		type: String,
-		isArray: false
-	})
-
-	@ApiQuery({
-		name: 'fields',
-		required: false,
-		explode: true,
-		type: String,
-		isArray: false
-	})
-
-	@ApiQuery({
-		name: 'limit',
-		required: false,
-		explode: true,
-		type: Number,
-		isArray: false
-	})
-
-	@ApiQuery({
-		name: 'offset',
-		required: false,
-		explode: true,
-		type: Number,
-		isArray: false
+		example: 'fire-alarm-inspection'
 	})
 
 	async findAll(@Req() req, @Res() res) {

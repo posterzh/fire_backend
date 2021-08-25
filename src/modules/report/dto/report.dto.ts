@@ -10,19 +10,12 @@ export class CreateReportDTO {
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        example: 'Career',
+        example: 'Sample Report',
         description: 'Name',
         format: 'string'
     })
     name: string;
 
-    // Icon
-    @ApiProperty({
-        example: 'http://dummy.com/image/icons.ico',
-        description: 'Icon',
-        format: 'string'
-    })
-    icon: string;
 }
 
 export class UpdateReportDTO extends PartialType(CreateReportDTO) { }
