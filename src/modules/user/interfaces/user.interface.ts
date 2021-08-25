@@ -7,7 +7,6 @@ export interface IUser extends Document {
     password: string;
     avatar: string;
     last_login: Date;
-    role: [string];
     is_confirmed: Date;
     is_forget_pass: Date;
     otp: string;

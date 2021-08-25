@@ -44,7 +44,6 @@ export class UserService {
         await user.save();
 
         var users = user.toObject();
-        delete users.role
         delete users.password
         delete users.created_at
         delete users.updated_at
@@ -84,7 +83,6 @@ export class UserService {
         }
 
         var user = query.toObject()
-        delete user.role
         delete user.password
         delete user.created_at
         delete user.updated_at
@@ -196,7 +194,6 @@ export class UserService {
         }
 
         var user = query.toObject()
-        delete user.role
         delete user.password
         delete user.created_at
         delete user.updated_at
@@ -223,7 +220,6 @@ export class UserService {
         }
 
         var user = query.toObject()
-        delete user.role
         delete user.password
         delete user.created_at
         delete user.updated_at

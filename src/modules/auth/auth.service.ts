@@ -30,7 +30,7 @@ export class AuthService {
     async validate(jwtPayload: IJwtPayload) {
         var user
         if(jwtPayload.type === 'USER'){
-            user = await this.userModel.findOne({ _id: jwtPayload.userId }).populate('role', ['_id', 'adminType']);
+            user = await this.userModel.findOne({ _id: jwtPayload.userId });
             user.last_login = new Date()
             await user.save()
         }

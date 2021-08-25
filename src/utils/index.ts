@@ -9,7 +9,7 @@ export const prepareProduct = (product): IProduct => ({
     name: product.name,
     slug: product.slug,
     visibility: product.visibility, 
-    topic: product.topic,
+    inspection: product.inspection,
     image_url: product.image_url,
     video_url: product.video_url,
     headline: product.headline,

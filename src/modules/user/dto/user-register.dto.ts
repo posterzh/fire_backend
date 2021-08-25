@@ -54,9 +54,7 @@ export class UserRegisterDTO {
     @MinLength(6)
     password: string;
 
-    role: [string];
-
-    // favorite topic
+    // favorite inspection
     @ApiProperty({
         example: [],
         description: 'Topic ID',

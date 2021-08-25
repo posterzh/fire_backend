@@ -11,10 +11,6 @@ export const UserSchema = new mongoose.Schema({
     },
     avatar: { type: String },
     last_login: { type: Date },
-    role: [{ 
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Role'
-    }],
     is_confirmed: { type: Date, default: null },
     is_forget_pass: { type: Date, default: null },
     otp: {type: String, default: null},

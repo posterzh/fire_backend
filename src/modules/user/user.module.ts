@@ -7,7 +7,6 @@ import { UserService } from './user.service';
 import { AuthService } from '../auth/auth.service';
 import { UserSchema } from './schemas/user.schema';
 import { MailService } from '../mail/mail.service';
-import { TemplatesModule } from '../templates/templates.module';
 
 @Module({
   imports: [
@@ -15,7 +14,6 @@ import { TemplatesModule } from '../templates/templates.module';
       { name: 'User', schema: UserSchema }
     ]),
     AuthModule,
-    TemplatesModule,
   ],
   controllers: [UserController],
   providers: [UserService, AuthService, MailService],
