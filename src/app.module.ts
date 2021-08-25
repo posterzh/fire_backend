@@ -6,10 +6,16 @@ import { UserModule } from './modules/user/user.module';
 import { MONGO_DB_CONNECTION } from './config/configuration';
 import { InspectionModule } from './modules/inspection/inspection.module';
 import { ReportModule } from './modules/report/report.module';
+import { ServeStaticModule } from "@nestjs/serve-static";
+import {join} from "path";
 
 @Module({
   imports: [
     MONGO_DB_CONNECTION,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '..', 'fire-inspection-web', 'build'),
+      exclude: ['/api*'],
+    }),
     AuthModule,
     UserModule,
     InspectionModule,
