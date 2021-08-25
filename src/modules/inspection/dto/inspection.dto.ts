@@ -5,24 +5,33 @@ import {
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
+export enum InspectionCategory {
+    FIRE_ALARM = 'Fire Alarm',
+    SPRINKLER = 'Sprinkler',
+    EXTINGUISHER = 'Extinguisher',
+    EMERGENCY = 'Emergency'
+}
+
 export class CreateInspectionDTO {
     // Name
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        example: 'Career',
+        example: 'Fire Alarm Inspection',
         description: 'Name',
         format: 'string'
     })
     name: string;
 
-    // Icon
+    // Category
+    @IsNotEmpty()
+    @IsString()
     @ApiProperty({
-        example: 'http://dummy.com/image/icons.ico',
-        description: 'Icon',
-        format: 'string'
+        example: InspectionCategory.FIRE_ALARM,
+        description: 'Category',
+        enum: InspectionCategory
     })
-    icon: string;
+    category: InspectionCategory;
 }
 
 export class UpdateInspectionDTO extends PartialType(CreateInspectionDTO) { }
