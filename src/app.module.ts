@@ -5,6 +5,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { MONGO_DB_CONNECTION } from './config/configuration';
 import { InspectionModule } from './modules/inspection/inspection.module';
+import { ReportModule } from './modules/report/report.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { InspectionModule } from './modules/inspection/inspection.module';
     AuthModule,
     UserModule,
     InspectionModule,
+    ReportModule,
   ],
   controllers: [AppController],
   providers: [AppService],
