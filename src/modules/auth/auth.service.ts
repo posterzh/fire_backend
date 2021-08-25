@@ -10,7 +10,6 @@ import { IUser } from '../user/interfaces/user.interface';
 import { IJwtPayload } from './interfaces/jwt-payload.interface';
 
 import { JWT_ENCRYPT_SECRET_KEY, JWT_EXPIRATION_TIME, JWT_SECRET_KEY } from 'src/config/configuration';
-import { IAdmin } from '../administrator/interfaces/admin.interface';
 
 @Injectable()
 export class AuthService {
@@ -18,7 +17,6 @@ export class AuthService {
 
     constructor(
         @InjectModel('User') private readonly userModel: Model<IUser>,
-        @InjectModel('Admin') private readonly adminModel: Model<IAdmin>
     ) {
         this.cryptr = new Cryptr(JWT_ENCRYPT_SECRET_KEY);
     }
@@ -35,8 +33,6 @@ export class AuthService {
             user = await this.userModel.findOne({ _id: jwtPayload.userId }).populate('role', ['_id', 'adminType']);
             user.last_login = new Date()
             await user.save()
-        }else{
-            user = await this.adminModel.findOne({ _id: jwtPayload.userId }).populate('role', ['_id', 'adminType']);
         }
 
         if (!user) {

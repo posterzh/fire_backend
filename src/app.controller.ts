@@ -7,6 +7,6 @@ export class AppController {
 
   @Get()
   index(@Res() res) {
-    return res.status(HttpStatus.OK).send({ success: true, message: 'laruno-client-api-v1' });
+    return res.status(HttpStatus.OK).send({ success: true, message: 'fire-backend-api-v1' });
   }
 }

@@ -5,7 +5,6 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { ITemplate } from '../templates/interfaces/templates.interface';
 import * as Mailgun from 'mailgun-js';
-import { IMedia } from '../upload/interfaces/media.interface';
 import { StrToUnix } from 'src/utils/StringManipulation';
 import { randomIn } from 'src/utils/helper';
 
@@ -22,7 +21,6 @@ const mailgun = new Mailgun({apiKey: MAIL_GUN_KEY, domain: MAIL_GUN_DOMAIN})
 export class MailService {
     constructor(
         @InjectModel('Template') private readonly templateModel: Model<ITemplate>,
-        @InjectModel('Media') private readonly mediaModel: Model<IMedia>,
     ) {}
 
 async templateGenerate(data: any) {
@@ -31,11 +29,6 @@ async templateGenerate(data: any) {
 
         let logo = null
 
-        const getLogo = await this.mediaModel.findOne({filename: "laruno_logo.png"})
-
-        if(getLogo) {
-            logo = getLogo.url
-        }
 
         var mailLink = `${API}/users/verification?confirmation=${unique}`
         // var mailLink = `${CLIENT}/verification?confirmation=${unique}`

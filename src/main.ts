@@ -1,5 +1,6 @@
+import 'source-map-support/register';
 import { NestFactory } from '@nestjs/core';
-import { ValidationPipe } from '@nestjs/common';
+import { ValidationPipe, Logger } from '@nestjs/common';
 import { WsAdapter } from '@nestjs/platform-ws';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
@@ -24,12 +25,12 @@ async function bootstrap() {
   app.use(cookieParser());
 
   app.useGlobalPipes(new ValidationPipe());
-  app.setGlobalPrefix('api/v1');
+  app.setGlobalPrefix('api');
   app.useWebSocketAdapter(new WsAdapter(app) as any);
 
   // Swagger API Documentation
   const options = new DocumentBuilder()
-    .setTitle('laruno-client-api-v1')
+    .setTitle('FireInspection')
     .setDescription(`API ${process.env.NODE_ENV}.`)
     .setVersion('1.0')
     // .addBearerAuth({ type: "apiKey", in: "header", name: "Authorization", description: "HTTP/HTTP Bearer" })
@@ -38,10 +39,10 @@ async function bootstrap() {
     .build();
 
   const document = SwaggerModule.createDocument(app, options);    
-  SwaggerModule.setup('api/v1/docs', app, document);
+  SwaggerModule.setup('api/docs', app, document);
 
   await app.listen(PORT);
 
-  console.log(`[API] laruno-client-api started running in ${process.env.NODE_ENV} mode on port ${PORT}`);
+  Logger.log(`[API] is running at http://localhost:${PORT}/api/docs`)
 }
 bootstrap();

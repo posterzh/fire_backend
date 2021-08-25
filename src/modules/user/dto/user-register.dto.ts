@@ -20,7 +20,7 @@ export class UserRegisterDTO {
 
     // Email
     @ApiProperty({
-        example: 'johndoe@gmail.com',
+        example: 'brianwaller0963@gmail.com',
         description: 'Email',
         format: 'email',
         uniqueItems: true
@@ -58,7 +58,7 @@ export class UserRegisterDTO {
 
     // favorite topic
     @ApiProperty({
-        example: ['5f87cd2b8f81060165f1de63', '5fb63780f5cdfe00749e0b07'],
+        example: [],
         description: 'Topic ID',
         format: 'array string',
     })

@@ -60,6 +60,7 @@
     "request": "^2.88.2",
     "rimraf": "^3.0.2",
     "rxjs": "^6.6.3",
+    "source-map-support": "^0.5.19",
     "swagger-ui-express": "^4.1.5",
     "xendit-node": "^1.4.0"
   },

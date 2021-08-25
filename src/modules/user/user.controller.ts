@@ -108,27 +108,6 @@ export class UserController {
     }
 
     /**
-     * @route   Get api/v1/users/me
-     * @desc    Get user data
-     * @access  Public
-     */
-    @Get('me')
-    @UseGuards(JwtGuard)
-	@Roles(...inRole)
-    @ApiBearerAuth()
-    @ApiOperation({ summary: 'who am i | Client' })
-    
-    async whoAmI(@User() user: IUser, @Res() res) {
-        const result = await this.userService.whoAmI(user);
-
-        return res.status(HttpStatus.OK).json({
-			statusCode: HttpStatus.OK,
-			message: 'Get my data is successful',
-			data: result
-		});
-    }
-
-    /**
      * @route   PUT api/v1/users/change-password
      * @desc    Change user password
      * @access  Public
