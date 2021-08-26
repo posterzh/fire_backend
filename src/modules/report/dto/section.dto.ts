@@ -5,12 +5,12 @@ import {
 } from 'class-validator';
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
-export class CreateReportDTO {
+export class CreateSectionDTO {
     // Name
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        example: 'Sample Report',
+        example: 'Sample Section',
         description: 'Name',
         format: 'string'
     })
@@ -18,7 +18,7 @@ export class CreateReportDTO {
 
 }
 
-export class UpdateReportDTO extends PartialType(CreateReportDTO) { }
+export class UpdateSectionDTO extends PartialType(CreateSectionDTO) { }
 
 
 

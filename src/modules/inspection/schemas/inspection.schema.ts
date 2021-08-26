@@ -20,6 +20,15 @@ export const InspectionSchema = new mongoose.Schema({
     unique: true,
     slug: "name",
   },
+  template: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Template',
+  },
+  reports: [{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Report',
+    default: []
+  }]
 }, {
   collection: "inspections",
   versionKey: false,
