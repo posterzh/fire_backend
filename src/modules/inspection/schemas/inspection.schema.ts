@@ -10,15 +10,15 @@ export const InspectionSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  category: {
-    type: String,
-    enum: InspectionCategory,
-    required: true,
-  },
   slug: {
     type: String,
     unique: true,
     slug: "name",
+  },
+  category: {
+    type: String,
+    enum: InspectionCategory,
+    required: true,
   },
   template: {
     type: mongoose.Schema.Types.ObjectId,

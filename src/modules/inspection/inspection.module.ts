@@ -11,8 +11,8 @@ import { ReportSchema, TemplateSchema } from "../report/schemas/report.schema";
   imports: [
 		MongooseModule.forFeature([
       { name: 'Inspection', schema: InspectionSchema },
-      { name: 'Report', schema: ReportSchema },
-      { name: 'Template', schema: TemplateSchema },
+      // { name: 'Report', schema: ReportSchema },
+      // { name: 'Template', schema: TemplateSchema },
     ]),
     AuthModule,
 	],

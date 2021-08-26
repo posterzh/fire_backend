@@ -36,8 +36,8 @@ export class ReportController {
 
 
 	@Post()
-	@UseGuards(JwtGuard)
-	@ApiBearerAuth()
+	// @UseGuards(JwtGuard)
+	// @ApiBearerAuth()
 	@ApiOperation({ summary: 'Create new report' })
 
 	async create(@Res() res, @Body() createReportDto: CreateReportDTO) {

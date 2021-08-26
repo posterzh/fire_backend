@@ -10,6 +10,8 @@ import * as mongoose from "mongoose";
 import { IQuestion, IReport, ISection } from "./interfaces/report.interface";
 import { OptQuery } from "src/utils/OptQuery";
 import { StrToUnix } from "src/utils/StringManipulation";
+import { CreateReportDTO } from "./dto/report.dto";
+import { IInspection } from "../inspection/interfaces/inspection.interface";
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -17,23 +19,25 @@ const ObjectId = mongoose.Types.ObjectId;
 export class ReportService {
 
   constructor(
+    @InjectModel("Inspection") private readonly inspectionModel: Model<IInspection>,
     @InjectModel("Report") private readonly reportModel: Model<IReport>,
     @InjectModel("Section") private readonly sectionModel: Model<ISection>,
     @InjectModel("Question") private readonly questionModel: Model<IQuestion>,
   ) {
   }
 
-  async create(createReportDto: any): Promise<IReport> {
-    const createReport = new this.reportModel(createReportDto);
+  async create(createReportDto: CreateReportDTO): Promise<IReport> {
+    const inspection = await this.inspectionModel.findById(createReportDto.inspection_id)
 
-    // Check if report name is already exist
-    const isReportNameExist = await this.reportModel.findOne({ name: createReport.name });
-
-    if (isReportNameExist) {
-      throw new BadRequestException("That report name (slug) is already exist.");
+    if (!inspection) {
+      throw new NotFoundException(`Inspection with id ${createReportDto.inspection_id}`)
     }
 
-    return await createReport.save();
+    const newReport = new this.reportModel(createReportDto);
+    inspection.reports.unshift(newReport);
+    inspection.save();
+
+    return await newReport.save();
   }
 
   async findAll(options: OptQuery): Promise<IReport[]> {

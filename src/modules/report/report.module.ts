@@ -5,13 +5,15 @@ import { AuthModule } from '../auth/auth.module';
 import { ReportController } from './report.controller';
 import { ReportService } from './report.service';
 import { QuestionSchema, SectionSchema, ReportSchema } from "./schemas/report.schema";
+import { InspectionSchema } from "../inspection/schemas/inspection.schema";
 
 @Module({
   imports: [
 		MongooseModule.forFeature([
-      { name: 'Question', schema: QuestionSchema },
-      { name: 'Section', schema: SectionSchema },
+      { name: 'Inspection', schema: InspectionSchema },
       { name: 'Report', schema: ReportSchema },
+      { name: 'Section', schema: SectionSchema },
+      { name: 'Question', schema: QuestionSchema },
     ]),
     AuthModule,
 	],
