@@ -8,6 +8,7 @@ import { InspectionModule } from './modules/inspection/inspection.module';
 import { ReportModule } from './modules/report/report.module';
 import { ServeStaticModule } from "@nestjs/serve-static";
 import {join} from "path";
+import { TemplateModule } from './modules/template/template.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import {join} from "path";
     UserModule,
     InspectionModule,
     ReportModule,
+    TemplateModule,
   ],
   controllers: [AppController],
   providers: [AppService],
