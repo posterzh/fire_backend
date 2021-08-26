@@ -138,7 +138,6 @@ export class ReportService {
     for (let i in found) {
       found[i]._id = new ObjectId();
       found[i].name = `${found[i].name}-${copy}`;
-      found[i].slug = `${found[i].slug}-${copy}`;
     }
 
     try {

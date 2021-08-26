@@ -10,7 +10,10 @@ export const QuestionSchema = new mongoose.Schema({
     required: true,
   },
   order: Number,
-  type: QuestionType,
+  type: {
+    type: String,
+    enum: QuestionType
+  },
   answer: String,
   deficiencyCode: String,
   customCode: String,

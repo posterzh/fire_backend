@@ -6,7 +6,7 @@ import {
 import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class CreateReportDTO {
-    // Name
+    // name
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
@@ -16,9 +16,30 @@ export class CreateReportDTO {
     })
     name: string;
 
+    // inspection_id
+    @IsNotEmpty()
+    @IsString()
+    @ApiProperty({
+        example: '6034e7a5ed1ee1608cfb1d8d',
+        description: 'Inspection ID',
+        format: 'string',
+        required: true
+    })
+    inspection_id: string;
 }
 
 export class UpdateReportDTO extends PartialType(CreateReportDTO) { }
 
+export class ArrayIdDTO {
+    // Delete multiple ID or Clone Multiple Id
+    @IsNotEmpty()
+    @IsArray()
+    @ApiProperty({
+        example: ['5f699e87b92fbe5320a35a93', '5f699e8bb92fbe5320a35a94'],
+        description: 'Id',
+        format: 'array'
+    })
+    id: string[];
+}
 
 
