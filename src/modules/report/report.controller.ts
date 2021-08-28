@@ -1,12 +1,8 @@
 import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res, UseGuards } from "@nestjs/common";
-
 import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
-
 import { JwtGuard } from "../auth/guards/jwt.guard";
-
 import { ReportService } from "./report.service";
 import { ArrayIdDTO, CreateReportDTO, UpdateReportDTO } from "./dto/report.dto";
-import { InspectionCategory } from "../inspection/dto/inspection.dto";
 
 @ApiTags("Reports")
 @Controller('reports')
@@ -17,7 +13,7 @@ export class ReportController {
 	@ApiOperation({ summary: 'Get all report' })
 
 	@ApiQuery({
-		name: 'inspection',
+		name: 'inspection_slug',
 		required: false,
 		type: String,
 		example: 'fire-alarm-inspection'
@@ -25,7 +21,7 @@ export class ReportController {
 
 	async findAll(@Req() req, @Res() res) {
 
-		const report = await this.reportService.findAll(req.query);
+		const report = await this.reportService.findAll(req.query.inspection_slug);
 		return res.status(HttpStatus.OK).json({
 			statusCode: HttpStatus.OK,
 			message: `Success get reports`,
@@ -58,7 +54,7 @@ export class ReportController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '5fb636b3f5cdfe00749e0b05',
+		example: '6128db87542e9d507ce92686',
 		description: 'Report ID'
 	})
 
@@ -72,8 +68,8 @@ export class ReportController {
 	}
 
 	@Put(':id')
-	@UseGuards(JwtGuard)
-	@ApiBearerAuth()
+	// @UseGuards(JwtGuard)
+	// @ApiBearerAuth()
 	@ApiOperation({ summary: 'Update report by id' })
 
 	@ApiParam({
@@ -81,7 +77,7 @@ export class ReportController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '5fb636b3f5cdfe00749e0b05',
+		example: '6128db87542e9d507ce92686',
 		description: 'Report ID'
 	})
 
@@ -108,7 +104,7 @@ export class ReportController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '5fb636b3f5cdfe00749e0b05',
+		example: '6128db87542e9d507ce92686',
 		description: 'Report ID'
 	})
 

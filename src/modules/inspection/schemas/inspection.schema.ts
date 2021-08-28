@@ -1,6 +1,5 @@
 import * as mongoose from "mongoose";
 import * as slug from "mongoose-slug-updater";
-import { InspectionCategory } from "../dto/inspection.dto";
 
 mongoose.plugin(slug);
 
@@ -16,9 +15,8 @@ export const InspectionSchema = new mongoose.Schema({
     slug: "name",
   },
   category: {
-    type: String,
-    enum: InspectionCategory,
-    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Category',
   },
   template: {
     type: mongoose.Schema.Types.ObjectId,
@@ -33,9 +31,21 @@ export const InspectionSchema = new mongoose.Schema({
   collection: "inspections",
   versionKey: false,
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
+  toObject: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    },
+  },
+  toJSON: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    }
+  }
 });
 
 // create index search
 InspectionSchema.index({
-  name: "text", slug: "text", icon: "text",
+  name: "text", slug: "text",
 });

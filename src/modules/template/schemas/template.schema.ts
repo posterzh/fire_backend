@@ -7,7 +7,7 @@ export const TemplateSchema = new mongoose.Schema({
 }, {
   collection: "templates",
   versionKey: false,
-  timestamps: { createdAt: false, updatedAt: false },
+  timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
 });
 
 // create index search

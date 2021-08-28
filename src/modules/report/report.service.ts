@@ -27,10 +27,12 @@ export class ReportService {
   }
 
   async create(createReportDto: CreateReportDTO): Promise<IReport> {
-    const inspection = await this.inspectionModel.findById(createReportDto.inspection_id)
+    const inspection = await this.inspectionModel.findOne({
+      slug: createReportDto.inspection_slug
+    })
 
     if (!inspection) {
-      throw new NotFoundException(`Inspection with id ${createReportDto.inspection_id}`)
+      throw new NotFoundException(`Inspection with slug ${createReportDto.inspection_slug}`)
     }
 
     const newReport = new this.reportModel(createReportDto);
@@ -40,30 +42,20 @@ export class ReportService {
     return await newReport.save();
   }
 
-  async findAll(options: OptQuery): Promise<IReport[]> {
-    const limit = Number(options.limit);
-    const offset = Number(options.offset == 0 ? options.offset : (options.offset - 1));
-    const skip = offset * limit;
-    const sortval = (options.sortval == "asc") ? 1 : -1;
+  async findAll(inspection_slug): Promise<IReport[]> {
+    if (inspection_slug) {
+      const inspection = await this.inspectionModel.findOne({
+        slug: inspection_slug
+      }).populate('reports');
 
-    var query: any;
-    var match: any, sort: any = {};
-    if (options.sortby) {
-
-      if (options.fields) {
-        match = { $where: `/^${options.value}.*/.test(this.${options.fields})` };
+      if (!inspection) {
+        throw new NotFoundException(`Inspection with slug ${inspection_slug}`)
       }
 
-      sort = { [options.sortby]: sortval };
-    } else {
-      if (options.fields) {
-        match = { $where: `/^${options.value}.*/.test(this.${options.fields})` };
-      }
-      sort = { "updated_at": "desc" };
+      return inspection.reports;
     }
 
-    query = await this.reportModel.find(match).skip(skip).limit(limit).sort(sort).populate("rating", ["rate"]);
-    return query;
+    return await this.reportModel.find({})
   }
 
   async findById(id: string): Promise<IReport> {

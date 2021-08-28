@@ -16,16 +16,25 @@ export class CreateReportDTO {
     })
     name: string;
 
-    // inspection_id
+    // inspection_slug
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        example: '6034e7a5ed1ee1608cfb1d8d',
-        description: 'Inspection ID',
+        example: 'fire-alarm-inspection',
+        description: 'Inspection Slug',
         format: 'string',
         required: true
     })
-    inspection_id: string;
+    inspection_slug: string;
+
+    // description
+    @IsString()
+    @ApiProperty({
+        example: '',
+        description: 'Description',
+        format: 'string'
+    })
+    description: string;
 }
 
 export class UpdateReportDTO extends PartialType(CreateReportDTO) { }

@@ -57,7 +57,7 @@ export class TemplateController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '5fb636b3f5cdfe00749e0b05',
+		example: '6127dab1d55c1d9a267b6001',
 		description: 'Template ID'
 	})
 
@@ -80,7 +80,7 @@ export class TemplateController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '5fb636b3f5cdfe00749e0b05',
+		example: '6127dab1d55c1d9a267b6001',
 		description: 'Template ID'
 	})
 
@@ -107,7 +107,7 @@ export class TemplateController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '5fb636b3f5cdfe00749e0b05',
+		example: '6127dab1d55c1d9a267b6001',
 		description: 'Template ID'
 	})
 

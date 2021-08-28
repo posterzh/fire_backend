@@ -30,6 +30,18 @@ export const QuestionSchema = new mongoose.Schema({
   collection: "questions",
   versionKey: false,
   timestamps: { createdAt: false, updatedAt: false },
+  toObject: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    },
+  },
+  toJSON: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    }
+  }
 })
 
 export const SectionSchema = new mongoose.Schema({
@@ -44,11 +56,24 @@ export const SectionSchema = new mongoose.Schema({
   collection: "sections",
   versionKey: false,
   timestamps: { createdAt: false, updatedAt: false },
+  toObject: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    },
+  },
+  toJSON: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    }
+  }
 })
 
 
 export const ReportSchema = new mongoose.Schema({
   name: String,
+  description: String,
   sections: [SectionSchema],
   wrote_by: {
     type: mongoose.Schema.Types.ObjectId,
@@ -58,15 +83,18 @@ export const ReportSchema = new mongoose.Schema({
   collection: "reports",
   versionKey: false,
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" },
-});
-
-export const TemplateSchema = new mongoose.Schema({
-  name: String,
-  sections: [SectionSchema],
-}, {
-  collection: "templates",
-  versionKey: false,
-  timestamps: { createdAt: false, updatedAt: false },
+  toObject: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    },
+  },
+  toJSON: {
+    transform: function(doc, ret) {
+      ret.id = ret._id;
+      delete ret._id;
+    }
+  }
 });
 
 // create index search

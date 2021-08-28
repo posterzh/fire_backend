@@ -2,22 +2,23 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { AuthModule } from '../auth/auth.module';
-import { InspectionController } from './inspection.controller';
-import { InspectionService } from './inspection.service';
+import { InspectionController } from './controllers/inspection.controller';
+import { InspectionService } from './services/inspection.service';
 import { InspectionSchema } from './schemas/inspection.schema';
-import { ReportSchema, TemplateSchema } from "../report/schemas/report.schema";
+import { CategoryController } from "./controllers/category.controller";
+import { CategoryService } from "./services/category.service";
+import { CategorySchema } from "./schemas/category.schema";
 
 @Module({
   imports: [
 		MongooseModule.forFeature([
       { name: 'Inspection', schema: InspectionSchema },
-      // { name: 'Report', schema: TemplateSchema },
-      // { name: 'Template', schema: TemplateSchema },
+      { name: 'Category', schema: CategorySchema },
     ]),
     AuthModule,
 	],
-  controllers: [InspectionController],
-  providers: [InspectionService],
+  controllers: [InspectionController, CategoryController],
+  providers: [CategoryService, InspectionService],
   exports: [MongooseModule, InspectionService]
 })
 export class InspectionModule {}
