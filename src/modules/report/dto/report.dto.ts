@@ -3,7 +3,7 @@ import {
     IsString,
     IsArray
 } from 'class-validator';
-import { ApiProperty, PartialType } from '@nestjs/swagger';
+import { ApiProperty, OmitType, PartialType } from "@nestjs/swagger";
 
 export class CreateReportDTO {
     // name
@@ -37,7 +37,7 @@ export class CreateReportDTO {
     description: string;
 }
 
-export class UpdateReportDTO extends PartialType(CreateReportDTO) { }
+export class UpdateReportDTO extends PartialType(OmitType(CreateReportDTO, ['inspection_slug'])) { }
 
 export class ArrayIdDTO {
     // Delete multiple ID or Clone Multiple Id
