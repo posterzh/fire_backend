@@ -42,20 +42,30 @@ export class ReportService {
     return await newReport.save();
   }
 
-  async findAll(inspection_slug): Promise<IReport[]> {
-    if (inspection_slug) {
-      const inspection = await this.inspectionModel.findOne({
-        slug: inspection_slug
-      }).populate('reports');
-
-      if (!inspection) {
-        throw new NotFoundException(`Inspection with slug ${inspection_slug}`)
-      }
-
-      return inspection.reports;
-    }
-
-    return await this.reportModel.find({})
+  async findAll(): Promise<IReport[]> {
+    return this.reportModel.aggregate(
+      [
+        {
+          "$lookup" : {
+            "from" : "inspections",
+            "localField" : "_id",
+            "foreignField" : "reports",
+            "as" : "inspection"
+          }
+        },
+        {
+          "$unwind" : {
+            "path" : "$inspection"
+          }
+        },
+        {
+          $addFields: { id: "$_id", "inspection.id": "$inspection._id" }
+        },
+        {
+          $project: { _id: 0, "inspection._id": 0, "inspection.reports": 0 }
+        }
+      ]
+    );
   }
 
   async findById(id: string): Promise<IReport> {

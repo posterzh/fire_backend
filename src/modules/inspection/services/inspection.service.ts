@@ -28,7 +28,7 @@ export class InspectionService {
     if (category_slug) {
       const category = await this.categoryModel.findOne({
         slug: category_slug
-      })
+      }).populate('category')
 
       if (!category) {
         throw new NotFoundException(`Category with slug ${category_slug}`)
@@ -37,6 +37,6 @@ export class InspectionService {
       return this.inspectionModel.find({category: category._id});
     }
 
-    return this.inspectionModel.find({});
+    return this.inspectionModel.find({}).populate('category');
   }
 }

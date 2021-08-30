@@ -9,7 +9,7 @@ import { InspectionService } from "../services/inspection.service";
 export class InspectionController {
 	constructor(private readonly inspectionService: InspectionService) { }
 
-	@Get('inspections')
+	@Get()
 	@ApiOperation({ summary: 'Get all inspection' })
 
 	@ApiQuery({

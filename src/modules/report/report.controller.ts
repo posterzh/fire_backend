@@ -11,17 +11,9 @@ export class ReportController {
 
 	@Get()
 	@ApiOperation({ summary: 'Get all report' })
-
-	@ApiQuery({
-		name: 'inspection_slug',
-		required: false,
-		type: String,
-		example: 'fire-alarm-inspection'
-	})
-
 	async findAll(@Req() req, @Res() res) {
 
-		const report = await this.reportService.findAll(req.query.inspection_slug);
+		const report = await this.reportService.findAll();
 		return res.status(HttpStatus.OK).json({
 			statusCode: HttpStatus.OK,
 			message: `Success get reports`,
