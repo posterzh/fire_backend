@@ -87,8 +87,8 @@ export class ReportController {
 	}
 
 	@Delete(':id')
-	@UseGuards(JwtGuard)
-	@ApiBearerAuth()
+	// @UseGuards(JwtGuard)
+	// @ApiBearerAuth()
 	@ApiOperation({ summary: 'Delete report' })
 
 	@ApiParam({

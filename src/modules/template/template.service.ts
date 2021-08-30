@@ -27,20 +27,6 @@ export class TemplateService {
   ) {
   }
 
-  async create(createTemplateDto: CreateTemplateDTO): Promise<ITemplate> {
-    const inspection = await this.inspectionModel.findById(createTemplateDto.inspection_id)
-
-    if (!inspection) {
-      throw new NotFoundException(`Inspection with id ${createTemplateDto.inspection_id}`)
-    }
-
-    const newTemplate = new this.templateModel(createTemplateDto);
-    inspection.template = newTemplate;
-    inspection.save();
-
-    return await newTemplate.save();
-  }
-
   async findAll(options: OptQuery): Promise<ITemplate[]> {
     const limit = Number(options.limit);
     const offset = Number(options.offset == 0 ? options.offset : (options.offset - 1));
@@ -65,90 +51,5 @@ export class TemplateService {
 
     query = await this.templateModel.find(match).skip(skip).limit(limit).sort(sort).populate("rating", ["rate"]);
     return query;
-  }
-
-  async findById(id: string): Promise<ITemplate> {
-    let result;
-    try {
-      result = await this.templateModel.findById(id).populate("rating");
-    } catch (error) {
-      throw new NotFoundException(`Could nod find template with id ${id}`);
-    }
-
-    if (!result) {
-      throw new NotFoundException(`Could nod find template with id ${id}`);
-    }
-
-    return result;
-  }
-
-  async update(id: string, updateTemplateDto: any): Promise<ITemplate> {
-    let result;
-
-    // Check ID
-    try {
-      result = await this.templateModel.findById(id);
-    } catch (error) {
-      throw new NotFoundException(`Could nod find template with id ${id}`);
-    }
-
-    if (!result) {
-      throw new NotFoundException(`Could nod find template with id ${id}`);
-    }
-
-    try {
-      await this.templateModel.findByIdAndUpdate(id, updateTemplateDto);
-      return await this.templateModel.findById(id).exec();
-    } catch (error) {
-      throw new Error(error);
-    }
-  }
-
-  async delete(id: string): Promise<string> {
-    try {
-      await this.templateModel.findByIdAndRemove(id).exec();
-      return "ok";
-    } catch (err) {
-      throw new NotImplementedException("The template could not be deleted");
-    }
-  }
-
-  async deleteMany(arrayId: any): Promise<string> {
-    try {
-      await this.templateModel.deleteMany({ _id: { $in: arrayId } });
-      return "ok";
-    } catch (err) {
-      throw new NotImplementedException("The template could not be deleted");
-    }
-  }
-
-  async search(value: any): Promise<ITemplate[]> {
-    const result = await this.templateModel.find({
-      "name": { $regex: ".*" + value.search + ".*", $options: "i" },
-    });
-
-    if (!result) {
-      throw new NotFoundException("Your search was not found");
-    }
-
-    return result;
-  }
-
-  async insertMany(value: any) {
-    const arrayId = value.id;
-    const now = new Date();
-    const copy = `COPY-${StrToUnix(now)}`;
-
-    var found = await this.templateModel.find({ _id: { $in: arrayId } });
-    for (let i in found) {
-      found[i]._id = new ObjectId();
-      found[i].name = `${found[i].name}-${copy}`;
-    }
-
-    try {
-      return await this.templateModel.insertMany(found);
-    } catch (e) {
-      throw new NotImplementedException(`error when insert`);
-    }
   }
 }
