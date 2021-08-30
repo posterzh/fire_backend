@@ -12,6 +12,7 @@ import { OptQuery } from "src/utils/OptQuery";
 import { StrToUnix } from "src/utils/StringManipulation";
 import { CreateReportDTO } from "./dto/report.dto";
 import { IInspection } from "../inspection/interfaces/inspection.interface";
+import { ITemplate } from "../template/interfaces/template.interface";
 
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -20,6 +21,7 @@ export class ReportService {
 
   constructor(
     @InjectModel("Inspection") private readonly inspectionModel: Model<IInspection>,
+    @InjectModel("Template") private readonly templateModel: Model<ITemplate>,
     @InjectModel("Report") private readonly reportModel: Model<IReport>,
     @InjectModel("Section") private readonly sectionModel: Model<ISection>,
     @InjectModel("Question") private readonly questionModel: Model<IQuestion>,
@@ -29,43 +31,25 @@ export class ReportService {
   async create(createReportDto: CreateReportDTO): Promise<IReport> {
     const inspection = await this.inspectionModel.findOne({
       slug: createReportDto.inspection_slug
-    })
+    }).populate('template')
 
     if (!inspection) {
       throw new NotFoundException(`Inspection with slug ${createReportDto.inspection_slug}`)
     }
 
     const newReport = new this.reportModel(createReportDto);
-    inspection.reports.unshift(newReport);
-    inspection.save();
+    newReport.inspection = inspection;
 
-    return await newReport.save();
+    // Copy template to report
+    const template = inspection.template as ITemplate;
+    newReport.sections = template.sections;
+
+    await newReport.save();
+    return await this.reportModel.findById(newReport._id).exec();
   }
 
   async findAll(): Promise<IReport[]> {
-    return this.reportModel.aggregate(
-      [
-        {
-          "$lookup" : {
-            "from" : "inspections",
-            "localField" : "_id",
-            "foreignField" : "reports",
-            "as" : "inspection"
-          }
-        },
-        {
-          "$unwind" : {
-            "path" : "$inspection"
-          }
-        },
-        {
-          $addFields: { id: "$_id", "inspection.id": "$inspection._id" }
-        },
-        {
-          $project: { _id: 0, "inspection._id": 0, "inspection.reports": 0 }
-        }
-      ]
-    );
+    return this.reportModel.find({});
   }
 
   async findById(id: string): Promise<IReport> {

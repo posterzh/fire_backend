@@ -1,5 +1,6 @@
 import { Document } from "mongoose";
 import { IUser } from "../../user/interfaces/user.interface";
+import { IInspection } from "../../inspection/interfaces/inspection.interface";
 
 export enum QuestionType {
      HEAD = 'HEAD',
@@ -7,7 +8,9 @@ export enum QuestionType {
      TEXT = 'TEXT',
      CHECK = 'CHECK',
      TABLE = 'TABLE',
-     DROP = 'DROP'
+     DROP = 'DROP',
+     MULTILINE = 'MULTILINE',
+     EMPTY_CHECK = 'EMPTY_CHECK',
 }
 
 export interface IQuestion extends Document {
@@ -37,6 +40,8 @@ export interface ISection extends Document {
 
 export interface IReport extends Document {
      name: string;
+     description: string,
+     inspection: IInspection,
      sections: ISection[]
      wrote_by: IUser
 }

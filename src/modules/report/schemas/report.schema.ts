@@ -5,15 +5,12 @@ import { QuestionType } from "../interfaces/report.interface";
 mongoose.plugin(slug);
 
 export const QuestionSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-  },
   order: Number,
   type: {
     type: String,
     enum: QuestionType
   },
+  question: String,
   answer: String,
   deficiencyCode: String,
   customCode: String,
@@ -74,6 +71,10 @@ export const SectionSchema = new mongoose.Schema({
 export const ReportSchema = new mongoose.Schema({
   name: String,
   description: String,
+  inspection: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Inspection',
+  },
   sections: [SectionSchema],
   wrote_by: {
     type: mongoose.Schema.Types.ObjectId,

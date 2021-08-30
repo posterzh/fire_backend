@@ -6,5 +6,4 @@ export interface IInspection extends Document {
      slug: string;
      category: ICategory;
      template: any;
-     reports: [any]
 }
