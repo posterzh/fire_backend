@@ -43,13 +43,13 @@ export class ReportService {
   }
 
   async findAll(): Promise<IReport[]> {
-    return this.reportModel.find({});
+    return this.reportModel.find({}, {sections: 0});
   }
 
   async findById(id: string): Promise<IReport> {
     let result;
     try {
-      result = await this.reportModel.findById(id).populate("rating");
+      result = await this.reportModel.findById(id);
     } catch (error) {
       throw new NotFoundException(`Could nod find report with id ${id}`);
     }
@@ -77,7 +77,7 @@ export class ReportService {
 
     try {
       await this.reportModel.findByIdAndUpdate(id, updateReportDto);
-      return await this.reportModel.findById(id).exec();
+      return await this.reportModel.findById(id, {sections: 0}).exec();
     } catch (error) {
       throw new Error(error);
     }
