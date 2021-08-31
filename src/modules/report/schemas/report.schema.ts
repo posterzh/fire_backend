@@ -5,7 +5,6 @@ import { QuestionType } from "../interfaces/report.interface";
 mongoose.plugin(slug);
 
 export const QuestionSchema = new mongoose.Schema({
-  order: Number,
   type: {
     type: String,
     enum: QuestionType
@@ -46,7 +45,6 @@ export const SectionSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  order: Number,
   reference: String,
   questions: [QuestionSchema]
 }, {

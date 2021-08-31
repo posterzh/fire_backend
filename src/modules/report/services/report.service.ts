@@ -35,15 +35,14 @@ export class ReportService {
     newReport.inspection = inspection;
 
     // Copy template to report
-    const template = inspection.template as ITemplate;
-    newReport.sections = template.sections;
+    newReport.sections = inspection.template.sections;
 
     await newReport.save();
     return await this.reportModel.findById(newReport._id).exec();
   }
 
   async findAll(): Promise<IReport[]> {
-    return this.reportModel.find({}, {sections: 0});
+    return this.reportModel.find({});
   }
 
   async findById(id: string): Promise<IReport> {
@@ -77,7 +76,7 @@ export class ReportService {
 
     try {
       await this.reportModel.findByIdAndUpdate(id, updateReportDto);
-      return await this.reportModel.findById(id, {sections: 0}).exec();
+      return await this.reportModel.findById(id).exec();
     } catch (error) {
       throw new Error(error);
     }

@@ -11,7 +11,6 @@ import { OptQuery } from "src/utils/OptQuery";
 import { StrToUnix } from "src/utils/StringManipulation";
 import { IInspection } from "../inspection/interfaces/inspection.interface";
 import { IQuestion, ISection } from "../report/interfaces/report.interface";
-import { CreateTemplateDTO } from "./dto/template.dto";
 import { ITemplate } from "./interfaces/template.interface";
 
 const ObjectId = mongoose.Types.ObjectId;

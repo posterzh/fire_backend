@@ -16,14 +16,14 @@ export class QuestionService {
   ) {
   }
 
-  async update(report_id: string, section_index: number, question_index: number, updateQuestionDto: any): Promise<IReport> {
+  async update(report_id: string, section_index: number, question_index: number, updateQuestionDto: any): Promise<IQuestion> {
     try {
       const report = await this.reportModel.findById(report_id);
       const question = report.sections[section_index].questions[question_index];
       report.sections[section_index].questions[question_index] = _.merge(question, updateQuestionDto)
       await report.save();
 
-      return await this.reportModel.findById(report_id).exec();
+      return report.sections[section_index].questions[question_index];
     } catch (error) {
       throw new NotFoundException(`Could nod find`);
     }

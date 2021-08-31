@@ -15,7 +15,6 @@ export enum QuestionType {
 
 export interface IQuestion extends Document {
      name: string;
-     order: number;
      type: string;
      answer: string,
      deficiencyCode: string,

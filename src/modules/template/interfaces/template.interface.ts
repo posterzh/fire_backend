@@ -1,3 +1,7 @@
-import { IReport } from "../../report/interfaces/report.interface";
+import { ISection } from "../../report/interfaces/report.interface";
+import { Document } from "mongoose";
 
-export type ITemplate = IReport
+export interface ITemplate extends Document {
+  name: string;
+  sections: ISection[]
+}
