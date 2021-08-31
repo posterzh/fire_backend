@@ -1,18 +1,12 @@
-import {
-  Injectable,
-  NotFoundException,
-  BadRequestException,
-  NotImplementedException,
-} from "@nestjs/common";
+import { Injectable, NotFoundException, NotImplementedException } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model } from "mongoose";
 import * as mongoose from "mongoose";
-import { IQuestion, IReport, ISection } from "./interfaces/report.interface";
-import { OptQuery } from "src/utils/OptQuery";
+import { Model } from "mongoose";
+import { IQuestion, IReport, ISection } from "../interfaces/report.interface";
 import { StrToUnix } from "src/utils/StringManipulation";
-import { CreateReportDTO } from "./dto/report.dto";
-import { IInspection } from "../inspection/interfaces/inspection.interface";
-import { ITemplate } from "../template/interfaces/template.interface";
+import { CreateReportDTO } from "../dto/report.dto";
+import { IInspection } from "../../inspection/interfaces/inspection.interface";
+import { ITemplate } from "../../template/interfaces/template.interface";
 
 const ObjectId = mongoose.Types.ObjectId;
 

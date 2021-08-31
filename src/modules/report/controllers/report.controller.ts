@@ -1,8 +1,7 @@
-import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res, UseGuards } from "@nestjs/common";
-import { ApiBearerAuth, ApiOperation, ApiParam, ApiQuery, ApiTags } from "@nestjs/swagger";
-import { JwtGuard } from "../auth/guards/jwt.guard";
-import { ReportService } from "./report.service";
-import { ArrayIdDTO, CreateReportDTO, UpdateReportDTO } from "./dto/report.dto";
+import { Body, Controller, Delete, Get, HttpStatus, Param, Post, Put, Req, Res } from "@nestjs/common";
+import { ApiOperation, ApiParam, ApiTags } from "@nestjs/swagger";
+import { ReportService } from "../services/report.service";
+import { ArrayIdDTO, CreateReportDTO, UpdateReportDTO } from "../dto/report.dto";
 
 @ApiTags("Reports")
 @Controller('reports')
@@ -38,11 +37,11 @@ export class ReportController {
 		});
 	}
 
-	@Get(':id')
+	@Get(':report_id')
 	@ApiOperation({ summary: 'Get report by id' })
 
 	@ApiParam({
-		name: 'id',
+		name: 'report_id',
 		required: true,
 		explode: true,
 		type: String,
@@ -50,22 +49,22 @@ export class ReportController {
 		description: 'Report ID'
 	})
 
-	async findById(@Param('id') id: string, @Res() res)  {
-		const report = await this.reportService.findById(id);
+	async findById(@Param('report_id') report_id: string, @Res() res)  {
+		const report = await this.reportService.findById(report_id);
 		return res.status(HttpStatus.OK).json({
 			statusCode: HttpStatus.OK,
-			message: `Success get report by id ${id}`,
+			message: `Success get report by id ${report_id}`,
 			data: report
 		});
 	}
 
-	@Put(':id')
+	@Put(':report_id')
 	// @UseGuards(JwtGuard)
 	// @ApiBearerAuth()
 	@ApiOperation({ summary: 'Update report by id' })
 
 	@ApiParam({
-		name: 'id',
+		name: 'report_id',
 		required: true,
 		explode: true,
 		type: String,
@@ -74,11 +73,11 @@ export class ReportController {
 	})
 
 	async update(
-		@Param('id') id: string,
+		@Param('report_id') report_id: string,
 		@Res() res,
 		@Body() updateReportDto: UpdateReportDTO
 	) {
-		const report = await this.reportService.update(id, updateReportDto);
+		const report = await this.reportService.update(report_id, updateReportDto);
 		return res.status(HttpStatus.OK).json({
 			statusCode: HttpStatus.OK,
 			message: 'The Report has been successfully updated.',
@@ -86,13 +85,13 @@ export class ReportController {
 		});
 	}
 
-	@Delete(':id')
+	@Delete(':report_id')
 	// @UseGuards(JwtGuard)
 	// @ApiBearerAuth()
-	@ApiOperation({ summary: 'Delete report' })
+	@ApiOperation({ summary: 'Delete report by id' })
 
 	@ApiParam({
-		name: 'id',
+		name: 'report_id',
 		required: true,
 		explode: true,
 		type: String,
@@ -100,20 +99,20 @@ export class ReportController {
 		description: 'Report ID'
 	})
 
-	async delete(@Param('id') id: string, @Res() res){
-		const report = await this.reportService.delete(id);
+	async delete(@Param('report_id') report_id: string, @Res() res){
+		const report = await this.reportService.delete(report_id);
 
 		if (report == 'ok') {
 			return res.status(HttpStatus.OK).json({
 				statusCode: HttpStatus.OK,
-				message: `Success remove report by id ${id}`
+				message: `Success remove report by id ${report_id}`
 			});
 		}
 	}
 
 	@Delete('delete/multiple')
-	@UseGuards(JwtGuard)
-	@ApiBearerAuth()
+	// @UseGuards(JwtGuard)
+	// @ApiBearerAuth()
 	@ApiOperation({ summary: 'Delete multiple report' })
 
 	async deleteMany(@Res() res, @Body() arrayId: ArrayIdDTO) {
@@ -124,21 +123,5 @@ export class ReportController {
 				message: `Success remove report by id in: [${arrayId.id}]`
 			});
 		}
-	}
-
-	@Post('multiple/clone')
-	@UseGuards(JwtGuard)
-	@ApiBearerAuth()
-	@ApiOperation({ summary: 'Clone reports' })
-
-	async clone(@Res() res, @Body() input: ArrayIdDTO) {
-
-		const cloning = await this.reportService.insertMany(input)
-
-		return res.status(HttpStatus.CREATED).json({
-			statusCode: HttpStatus.CREATED,
-			message: 'Has been successfully cloned the report.',
-			data: cloning
-		});
 	}
 }

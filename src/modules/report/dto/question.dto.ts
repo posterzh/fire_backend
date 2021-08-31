@@ -7,15 +7,15 @@ import { ApiProperty, PartialType } from '@nestjs/swagger';
 import { QuestionType } from "../interfaces/report.interface";
 
 export class CreateQuestionDTO {
-    // name
+    // order
     @IsNotEmpty()
     @IsString()
     @ApiProperty({
-        example: 'Sample Question',
-        description: 'Name',
-        format: 'string'
+        example: '1',
+        description: 'Order',
+        format: 'number'
     })
-    name: string;
+    order: number;
 
     // type
     @IsString()
@@ -25,6 +25,14 @@ export class CreateQuestionDTO {
         enum: QuestionType
     })
     type: string;
+
+    // question
+    @IsString()
+    @ApiProperty({
+        description: 'Question',
+        format: 'string'
+    })
+    question: string;
 
     // answer
     @IsString()
