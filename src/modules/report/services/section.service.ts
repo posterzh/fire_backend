@@ -16,55 +16,39 @@ export class SectionService {
   }
 
   async update(report_id: string, section_index: number, updateReportDto: any): Promise<IReport> {
-    let result;
-
-    // Check ID
     try {
-      // result = await this.reportModel.findById(id);
-    } catch (error) {
-      throw new NotFoundException(`Could nod find report with id ${section_index}`);
-    }
+      const report = await this.reportModel.findById(report_id);
+      report.sections[section_index].name = updateReportDto.name;
+      await report.save();
 
-    if (!result) {
-      throw new NotFoundException(`Could nod find report with id ${section_index}`);
-    }
-
-    try {
-      await this.reportModel.findByIdAndUpdate(section_index, updateReportDto);
-      return await this.reportModel.findById(section_index).exec();
+      return await this.reportModel.findById(report_id).exec();
     } catch (error) {
-      throw new Error(error);
+      throw new NotFoundException(`Could nod find`);
     }
   }
 
-  async delete(report_id: string, section_index: number): Promise<string> {
+  async delete(report_id: string, section_index: number): Promise<IReport> {
     try {
-      await this.reportModel.findByIdAndRemove(report_id).exec();
-      return "ok";
-    } catch (err) {
-      throw new NotImplementedException("The report could not be deleted");
+      const report = await this.reportModel.findById(report_id);
+      report.sections.splice(section_index, 1);
+      await report.save();
+
+      return await this.reportModel.findById(report_id).exec();
+    } catch (error) {
+      throw new NotFoundException(`Could nod find`);
     }
   }
 
   async duplicate(report_id: string, section_index: number): Promise<IReport> {
-    let result;
-
-    // Check ID
     try {
-      result = await this.reportModel.findById(report_id);
-    } catch (error) {
-      throw new NotFoundException(`Could nod find report with id ${report_id}`);
-    }
+      const report = await this.reportModel.findById(report_id);
+      const section = report.sections[section_index];
+      report.sections.splice(section_index + 1, 0, section);
+      await report.save();
 
-    if (!result) {
-      throw new NotFoundException(`Could nod find report with id ${report_id}`);
-    }
-
-    try {
-      // await this.reportModel.findByIdAndUpdate(id, updateReportDto);
       return await this.reportModel.findById(report_id).exec();
     } catch (error) {
-      throw new Error(error);
+      throw new NotFoundException(`Could nod find`);
     }
   }
 }

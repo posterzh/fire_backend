@@ -45,7 +45,7 @@ export class ReportController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '6128db87542e9d507ce92686',
+		example: '712caa4eb53e60dddae40001',
 		description: 'Report ID'
 	})
 
@@ -68,7 +68,7 @@ export class ReportController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '6128db87542e9d507ce92686',
+		example: '712caa4eb53e60dddae40001',
 		description: 'Report ID'
 	})
 
@@ -95,7 +95,7 @@ export class ReportController {
 		required: true,
 		explode: true,
 		type: String,
-		example: '6128db87542e9d507ce92686',
+		example: '712caa4eb53e60dddae40001',
 		description: 'Report ID'
 	})
 

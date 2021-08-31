@@ -17,21 +17,17 @@ export class QuestionService {
   }
 
   async update(report_id: string, section_index: number, question_index: number, updateReportDto: any): Promise<IReport> {
-    let result;
-
-    // Check ID
     try {
-      result = await this.reportModel.findById(report_id);
+      const report = await this.reportModel.findById(report_id);
+      // report?.sections[section_index]?.questions[question_index]
     } catch (error) {
       throw new NotFoundException(`Could nod find report with id ${report_id}`);
     }
 
-    if (!result) {
-      throw new NotFoundException(`Could nod find report with id ${report_id}`);
-    }
 
     try {
-      await this.reportModel.findByIdAndUpdate(report_id, updateReportDto);
+
+      // await this.reportModel.findByIdAndUpdate(report_id, updateReportDto);
       return await this.reportModel.findById(report_id).exec();
     } catch (error) {
       throw new Error(error);

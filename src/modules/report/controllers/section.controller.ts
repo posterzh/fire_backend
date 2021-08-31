@@ -38,11 +38,11 @@ export class SectionController {
 		@Res() res,
 		@Body() updateSectionDto: UpdateSectionDTO
 	) {
-		const section = await this.sectionService.update(report_id, section_index, updateSectionDto);
+		const report = await this.sectionService.update(report_id, section_index, updateSectionDto);
 		return res.status(HttpStatus.OK).json({
 			statusCode: HttpStatus.OK,
 			message: 'The Section has been successfully updated.',
-			data: section
+			data: report
 		});
 	}
 
@@ -75,13 +75,11 @@ export class SectionController {
 		@Res() res
 	){
 		const report = await this.sectionService.delete(report_id, section_index);
-
-		if (report == 'ok') {
-			return res.status(HttpStatus.OK).json({
-				statusCode: HttpStatus.OK,
-				message: `Success remove section by id ${section_index}`
-			});
-		}
+		return res.status(HttpStatus.OK).json({
+			statusCode: HttpStatus.OK,
+			message: 'The Section has been successfully updated.',
+			data: report
+		});
 	}
 
 	@Post(':section_index/duplicate')
@@ -107,16 +105,16 @@ export class SectionController {
 		description: 'Section Index'
 	})
 
-	async clone(
+	async duplicate(
 		@Param('report_id') report_id: string,
 		@Param('section_index') section_index: number,
 		@Res() res
 	) {
-		const section = await this.sectionService.duplicate(report_id, section_index);
+		const report = await this.sectionService.duplicate(report_id, section_index);
 		return res.status(HttpStatus.OK).json({
 			statusCode: HttpStatus.OK,
 			message: 'The Section has been successfully duplicated.',
-			data: section
+			data: report
 		});
 	}
 }
