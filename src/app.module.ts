@@ -14,7 +14,7 @@ import { TemplateModule } from './modules/template/template.module';
   imports: [
     MONGO_DB_CONNECTION,
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '..', 'fire-inspection-web', 'build'),
+      rootPath: join(__dirname, '..', '..', 'fire-web', 'build'),
       exclude: ['/api*'],
     }),
     AuthModule,
