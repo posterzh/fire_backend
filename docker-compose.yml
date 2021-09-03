@@ -2,9 +2,11 @@ version: '3.7'
 services:
   mongodb_container:
     image: mongo:latest
+    env_file:
+        - .env
     environment:
-      MONGO_INITDB_ROOT_USERNAME: fireuser
-      MONGO_INITDB_ROOT_PASSWORD: firedb2021$3
+        MONGO_INITDB_ROOT_USERNAME: ${DB_USER}
+        MONGO_INITDB_ROOT_PASSWORD: ${DB_PASS}
     ports:
       - 27017:27017
     volumes:
